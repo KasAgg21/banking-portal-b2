@@ -1,26 +1,29 @@
 import React, { useState } from 'react';
 
 const ButtonEnabler = () => {
-  const [count, setCount] = useState(0);
   const totalButtons = 4;
-  const targetSum = (totalButtons * (totalButtons + 1)) / 2;
+  const [clickedButtons, setClickedButtons] = useState(Array(totalButtons).fill(false));
 
   const handleButtonClick = (index) => {
-    setCount(prevCount => prevCount + (index + 1));
+    const newClickedButtons = [...clickedButtons];
+    newClickedButtons[index] = true;
+    setClickedButtons(newClickedButtons);
   };
+
+  const allButtonsClicked = clickedButtons.every(Boolean);
 
   return (
     <div>
-      {[...Array(totalButtons)].map((_, index) => (
+      {clickedButtons.map((clicked, index) => (
         <button
           key={index}
           onClick={() => handleButtonClick(index)}
-          disabled={count >= targetSum ? true : false}
+          disabled={clicked}
         >
           Button {index + 1}
         </button>
       ))}
-      <button disabled={count < targetSum}>Button 5</button>
+      <button disabled={!allButtonsClicked}>Button 5</button>
     </div>
   );
 };
