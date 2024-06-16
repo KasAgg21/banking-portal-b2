@@ -1,6 +1,6 @@
 const express = require('express')
 const { json } = require("express");
-const {usermodel} = require('../models/Users');
+const usermodel = require('../models/Users');
 const { body, validationResult } = require('express-validator')
 
 const usersmodel = usermodel();
