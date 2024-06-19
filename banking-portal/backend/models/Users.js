@@ -1,7 +1,20 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
-
+const nameSchema = new Schema({
+    firstName: {
+        type: String,
+        required: true
+    },
+    middleName: {
+        type: String,
+        required: false
+    },
+    lastName: {
+        type: String,
+        required: true
+    }
+})
 const AddressSchema = new Schema({
     locality: {
         type: String,
@@ -35,7 +48,7 @@ const AddressSchema = new Schema({
 
 const UserSchema = new Schema({
     name: {
-        type: String,
+        type: nameSchema,
         required: true
     },
     age: {

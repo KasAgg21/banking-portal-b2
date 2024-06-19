@@ -5,7 +5,15 @@ const { body, validationResult } = require('express-validator')
 
 router.post(
     "/createUser",
-    [body('email_id', "Incorrect email-id").isEmail()],
+    [body('email_id', "Incorrect email-id").isEmail(),
+    body('name.firstName', "First name is required").notEmpty(),
+    body('name.lastName', "First name is required").notEmpty(),
+    body('age', "Age must be a number").isNumeric(),
+    body('address.locality', "Locality is required").notEmpty(),
+    body('address.house_no', "House number must be a number").isNumeric(),
+    body('address.street', "Street is required").notEmpty(),
+    body('address.city', "City is required").notEmpty(),
+    body('address.postcode', "Postcode is required").notEmpty()],
     async (req, res) => {
 
         const errors = validationResult(req);
@@ -15,7 +23,11 @@ router.post(
 
         try{
             await users.create({
-                name: req.body.name,
+                name: {
+                    firstName: req.body.name.firstName,
+                    middleName: req.body.name.middleName,
+                    lastName: req.body.name.lastName
+                },
                 age: req.body.age,
                 address: {
                     locality: req.body.address.locality,
