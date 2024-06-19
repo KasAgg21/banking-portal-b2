@@ -1,29 +1,34 @@
 import React, { useState } from 'react';
+import "../styles/buttonEnabler.css"
 
 const ButtonEnabler = () => {
-  const totalButtons = 4;
-  const [clickedButtons, setClickedButtons] = useState(Array(totalButtons).fill(false));
+  const buttonNames = ['hello', 'hellolo', 'hehello', 'hehelolo'];
+  const [clickedButtons, setClickedButtons] = useState(Array(buttonNames.length).fill(false));
+  const [remainingButtons, setRemainingButtons] = useState(buttonNames.length);
 
   const handleButtonClick = (index) => {
-    const newClickedButtons = [...clickedButtons];
-    newClickedButtons[index] = true;
-    setClickedButtons(newClickedButtons);
+    if (!clickedButtons[index]) {
+      const newClickedButtons = [...clickedButtons];
+      newClickedButtons[index] = true;
+      setClickedButtons(newClickedButtons);
+      setRemainingButtons(remainingButtons - 1);
+    }
   };
-
-  const allButtonsClicked = clickedButtons.every(Boolean);
 
   return (
     <div>
-      {clickedButtons.map((clicked, index) => (
+      {buttonNames.map((name, index) => (
         <button
           key={index}
           onClick={() => handleButtonClick(index)}
-          disabled={clicked}
+          disabled={clickedButtons[index]}
+          className={`button ${clickedButtons[index] ? 'clicked' : ''}`}
         >
-          Button {index + 1}
+          {name}
+          {clickedButtons[index] && <span className="check-mark">&#10003;</span>}
         </button>
       ))}
-      <button disabled={!allButtonsClicked}>Button 5</button>
+      <button disabled={remainingButtons > 0} className="button">Button 5</button>
     </div>
   );
 };
