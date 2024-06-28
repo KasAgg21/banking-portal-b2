@@ -1,6 +1,6 @@
 const express = require('express')
 
-const docreateuser = require('../Controller/user_controller');
+const {docreateuser} = require('../Controller/user_controller');
 const{otpMailValidator} = require('../helpers/validation'); 
 
 const router = express.Router();
