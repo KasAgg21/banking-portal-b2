@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import buttonEnabler from '../styles/buttonEnabler.css'
 const ButtonEnabler = () => {
   const totalButtons = 4;
   const [clickedButtons, setClickedButtons] = useState(Array(totalButtons).fill(false));
