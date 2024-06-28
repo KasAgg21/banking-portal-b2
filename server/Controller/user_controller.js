@@ -12,7 +12,7 @@ function docreateuser(req,resp){
         if(!errors.isEmpty()) {
             return resp.status(400).json({errors: errors.array()});
         }
-    const udoc= new usersmodel(req.body);
+    const udoc= new usermodel(req.body);
     udoc.save().then((retDoc) => {
         resp.set(json);
         resp.json({success: true});
