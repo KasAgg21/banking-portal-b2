@@ -1,22 +1,15 @@
-import logo from './logo.svg';
-
+import React from 'react';
+import './index.css';
+import ButtonEnabler from './component/disableButton'
+import DragAndDrop from './component/dragAndDrop'
+import HomeAddress from './component/homeAddressForm'
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Button Enabler</h1>
+      <ButtonEnabler />
+      <DragAndDrop/>
+      <HomeAddress/>
     </div>
   );
 }
