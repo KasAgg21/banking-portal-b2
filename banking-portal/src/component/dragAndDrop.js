@@ -24,23 +24,17 @@ const DragAndDropImages = () => {
     const uploadFiles = async () => {
         setLoading(true);
         const uploadedFileUrls = [];
-
         for (const file of files) {
             const formData = new FormData();
             formData.append('file', file);
-            formData.append('upload_preset', 'xebiadocs'); // Replace with your Cloudinary upload preset
-            formData.append("cloud_name", "ds5wmytro")
-            
-            fetch('https://api.cloudinary.com/v1_1/ds5wmytro/image/upload',{
-                    method: "post",
-                    body: formData
-                })
-                .then((res) => res.json)
-                .then((data) => {
-                    console.log(data);
-                }).catch((err) => {
-                    console.log(err);
-                })
+            formData.append('upload_preset', "bankapp"); // Replace with your unsigned upload preset
+    
+            try {
+                const response = await axios.post('https://api.cloudinary.com/v1_1/ds5wmytro/upload', formData);
+                uploadedFileUrls.push(response.data.secure_url);
+            } catch (error) {
+                console.error('Error uploading file to Cloudinary', error);
+            }
         }
 
         setLoading(false);
