@@ -33,7 +33,7 @@ const HomeAddress = () => {
         return newErrors;
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const newErrors = validate();
 
@@ -42,7 +42,12 @@ const HomeAddress = () => {
         } else {
             const currUserAddress = {...userAddress};
             setAddress([...address, currUserAddress]);
-
+            try{
+                const response = await axios.post('http://localhost:5000/userbase/user-address', userAddress);
+                console.log('Response:', response.data);
+            } catch (err) {
+                console.log('Address submission error:', err);
+            }
             setUserAddress({
                 locality:"",
                 sub_area: "",

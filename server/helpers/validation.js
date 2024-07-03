@@ -16,4 +16,12 @@ exports.userValidation=[
     check('address.street', "Street is required").notEmpty(),
     check('address.city', "City is required").notEmpty(),
     check('address.postcode', "Postcode is required").notEmpty(),
-]
+];
+
+exports.addressValidation = [
+    check('address.locality', "Locality is required").notEmpty(),
+    check('address.house_no', "House number must be a number").isNumeric(),
+    check('address.street', "Street is required").notEmpty(),
+    check('address.city', "City is required").notEmpty(),
+    check('address.postcode', "Postcode is required").notEmpty(),
+];
