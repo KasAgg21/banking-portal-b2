@@ -10,16 +10,16 @@ function docreateuser(req,resp){
     [body('email_id', "Incorrect email-id").isEmail()]
     const errors = validationResult(req);
         if(!errors.isEmpty()) {
-            return res.status(400).json({errors: errors.array()});
+            return resp.status(400).json({errors: errors.array()});
         }
-    const udoc= new usersmodel(req.body);
+    const udoc= new usermodel(req.body);
     udoc.save().then((retDoc) => {
         resp.set(json);
-        res.json({success: true});
+        resp.json({success: true});
     })
     .catch((err) =>{
         console.log(err);
-        res.json({success: false});
+        resp.json({success: false});
     })
 }
 
