@@ -1,20 +1,21 @@
-const express = require('express')
-const mongoDB = require('./db')
-const cros = require("cors");
-const dotenv = require("dotenv")
+const express = require('express');
+const mongoDB = require('./db');
+const cors = require('cors');
+const dotenv = require('dotenv');
 
-const app = express()
-const port = 5000
+dotenv.config();
+const app = express();
+const port = process.env.PORT || 5000;  // Ensure the port is set correctly
 
-const userbase = require("./Routes/userdata");
+const userbase = require('./Routes/userdata');
 
 mongoDB();
 
-app.use(cros());
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
 
 app.use('/userbase', userbase);
 
 app.listen(port, function () {
-  console.log("Server Started at ",port)
-})
+  console.log("Server Started at ", port);
+});

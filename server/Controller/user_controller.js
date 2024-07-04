@@ -5,7 +5,27 @@ const Otp=require('../models/otp');
 const { body, validationResult } = require('express-validator')
 
 const usersmodel = usermodel();
-
+async function addUserAddress(req, res){
+    const newUser = await usermodel.create({
+        name: {
+            firstName: "Raman",
+            middleName: "",
+            lastName: "Raghav"
+        },
+        age: 23,
+        address: {
+            locality: req.body.locality,
+            sub_area: req.body.sub_area,
+            house_no: req.body.house_no,
+            street: req.body.street,
+            sec_street: req.body.sec_street,
+            city: req.body.city,
+            postcode: req.body.postcode
+        },
+        email_id: "ramanraghav2.0@gmail.com"
+    })
+    res.status(201).json(newUser);
+}
 function docreateuser(req,resp){
     [body('email_id', "Incorrect email-id").isEmail()]
     const errors = validationResult(req);
@@ -79,5 +99,6 @@ const sendOtp=async (req, res) => {
 }
 }
 module.exports = {
+    addUserAddress,
     docreateuser,
     sendOtp}
