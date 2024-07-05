@@ -4,6 +4,10 @@ import { fetchUserDetailsByEmail } from '../dashboard_controller.js';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Table, Card, CardBody, CardTitle, CardText, Spinner } from 'react-bootstrap'; // Import necessary components
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+
+
 
 export default function Dashboard() {
     const [userDetails, setUserDetails] = useState(null);
@@ -20,6 +24,79 @@ export default function Dashboard() {
             setLoading(false);
         }
     }
+
+    const generatePDF = async () => {
+        if (!userDetails) {
+            return;
+        }
+
+        const doc = new jsPDF();
+        let yPos = 20;
+
+        // Title and account details
+        doc.text(`Account Statement for ${email}`, 20, yPos);
+        yPos += 10;
+        doc.text(`Balance: $${userDetails.balance.toFixed(2)} USD`, 20, yPos);
+        yPos += 10;
+
+        // Transaction table headers
+        const headers = ["Name", "ID", "Status", "Amount", "Date"];
+        const tableData = userDetails.transactions.map(transaction => [
+            transaction.name,
+            transaction.id,
+            transaction.status,
+            transaction.amount,
+            transaction.date
+        ]);
+
+        // Calculate total money in and money out
+        const totalMoneyIn = userDetails.transactions
+            .filter(transaction => transaction.status === "Money In")
+            .reduce((total, transaction) => total + parseFloat(transaction.amount.replace(/[^\d.-]/g, '')), 0);
+
+        const totalMoneyOut = userDetails.transactions
+            .filter(transaction => transaction.status === "Money Out")
+            .reduce((total, transaction) => total + parseFloat(transaction.amount.replace(/[^\d.-]/g, '')), 0);
+
+        // Transaction table
+        doc.autoTable({
+            startY: yPos,
+            head: [headers],
+            body: tableData,
+            theme: 'grid'
+        });
+
+        yPos = doc.autoTable.previous.finalY + 10;
+
+        // Totals
+        doc.text(`Total Money In: $${totalMoneyIn.toFixed(2)} USD`, 20, yPos);
+        yPos += 10;
+        doc.text(`Total Money Out: $${Math.abs(totalMoneyOut).toFixed(2)} USD`, 20, yPos);
+        yPos += 10;
+
+        // Save PDF
+        doc.save("account_statement.pdf");
+
+        const pdfBlob = doc.output('blob');
+        const formData = new FormData();
+        formData.append('pdf', pdfBlob, 'account_statement.pdf');
+
+        try {
+            const response = await fetch('/api/send-email', {
+                method: 'POST',
+                body: formData,
+            });
+            if (response.ok) {
+                alert('Email sent successfully!');
+            } else {
+                alert('Failed to send email.');
+            }
+        } catch (error) {
+            console.error('Error sending email:', error);
+            alert('Failed to send email.');
+        }
+
+    };
 
     useEffect(() => {
         fetchData();
@@ -75,6 +152,7 @@ export default function Dashboard() {
                     ))}
                 </tbody>
             </Table>
+            <button onClick={generatePDF}>Download PDF</button>
         </div>
     );
 }
