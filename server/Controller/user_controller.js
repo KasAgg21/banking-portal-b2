@@ -4,7 +4,6 @@ const usermodel = require('../models/Users');
 const Otp=require('../models/otp'); 
 const { body, validationResult } = require('express-validator')
 
-const usersmodel = usermodel();
 async function addUserAddress(req, res){
     const newUser = await usermodel.create({
         name: {
@@ -26,6 +25,36 @@ async function addUserAddress(req, res){
     })
     res.status(201).json(newUser);
 }
+
+const fetchUserDetails = async (req, res) => {
+    const { email } = req.query;
+    try {
+        const userdata = await usermodel.findOne({ email_id: email });
+        if (!userdata) return res.status(404).json({ error: "User not found" });
+
+        // Simulated transactions and favourite transfers
+        const transactions = [
+            { name: "Jenny Wilson", id: "2425666", status: "Money In", amount: "+$455.00", date: "20 Dec 22" },
+            { name: "Robert Fox", id: "2425666", status: "Money Out", amount: "-$455.00", date: "20 Dec 22" },
+            { name: "Jacob Jones", id: "2425666", status: "Money In", amount: "+$455.00", date: "20 Dec 22" }
+        ];
+
+        const favouriteTransfers = [
+            { name: "Kathryn Murphy" },
+            { name: "Wade Warren" }
+        ];
+
+        res.json({
+            name: `${usermodel.name.firstName} ${usermodel.name.lastName}`,
+            balance: 10500.00,
+            transactions,
+            favouriteTransfers
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 function docreateuser(req,resp){
     [body('email_id', "Incorrect email-id").isEmail()]
     const errors = validationResult(req);
@@ -59,7 +88,7 @@ const sendOtp=async (req, res) => {
     }
 
     const{email}=req.body;
-    const userData=await User.findOne({email});
+    const userData=await usermodel.findOne({email});
     if(!userData){
         return res.status(404).json({
             success: false,
@@ -97,8 +126,13 @@ const sendOtp=async (req, res) => {
     });
 
 }
+
+
+
 }
 module.exports = {
     addUserAddress,
     docreateuser,
-    sendOtp}
+    sendOtp,
+    fetchUserDetails
+}

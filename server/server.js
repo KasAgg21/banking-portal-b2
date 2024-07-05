@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 const app = express();
-const port = process.env.PORT || 5000;  // Ensure the port is set correctly
+const port = process.env.PORT || 5000; 
 
 const userbase = require('./Routes/userdata');
 
