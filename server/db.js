@@ -1,9 +1,5 @@
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-
-dotenv.config();
-
-const mongoURL = process.env.DATABASE_URL;
+const mongoURL = 'mongodb+srv://akshavya2509:Ly2mUsR9zBlChy2y@cluster0.olzvwz6.mongodb.net/banking-portal';
 
 const mongoDB = async () => {
     try {

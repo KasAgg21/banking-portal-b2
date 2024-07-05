@@ -3,6 +3,7 @@ import './index.css';
 import ButtonEnabler from './component/disableButton'
 import DragAndDrop from './component/dragAndDrop'
 import HomeAddress from './component/homeAddressForm'
+import Dashboard from './component/dashboard';
 function App() {
   return (
     <div className="App">
@@ -10,6 +11,7 @@ function App() {
       <ButtonEnabler />
       <DragAndDrop/>
       <HomeAddress/>
+      <Dashboard/>
     </div>
   );
 }
