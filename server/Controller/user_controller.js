@@ -1,8 +1,17 @@
 const express = require('express')
 const { json } = require("express");
 const usermodel = require('../models/Users');
+const URL = require('../models/documentURL')
 const Otp=require('../models/otp'); 
 const { body, validationResult } = require('express-validator')
+
+async function addDocumentURLs(req, res){
+    const urls = await URL.create({
+        urls: req.body.files
+    })
+    console.log(req.body);
+    res.status(201).json(urls);
+}
 
 async function addUserAddress(req, res){
     const newUser = await usermodel.create({
@@ -131,6 +140,7 @@ const sendOtp=async (req, res) => {
 
 }
 module.exports = {
+    addDocumentURLs,
     addUserAddress,
     docreateuser,
     sendOtp,
