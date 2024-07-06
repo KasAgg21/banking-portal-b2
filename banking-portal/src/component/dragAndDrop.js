@@ -31,7 +31,9 @@ const DragAndDropImages = () => {
     
             try {
                 const response = await axios.post('https://api.cloudinary.com/v1_1/ds5wmytro/upload', formData);
+                console.log(response.data.secure_url)
                 uploadedFileUrls.push(response.data.secure_url);
+                console.log(uploadedFileUrls)
             } catch (error) {
                 console.error('Error uploading file to Cloudinary', error);
             }
@@ -41,7 +43,7 @@ const DragAndDropImages = () => {
 
         // Send the file URLs to your backend
         try {
-            await axios.post('YOUR_BACKEND_URL', { files: uploadedFileUrls });
+            await axios.post('http://localhost:5000/userbase/add-docs', { files: uploadedFileUrls });
         } catch (error) {
             console.error('Error sending file URLs to backend', error);
         }
