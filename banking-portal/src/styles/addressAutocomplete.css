@@ -1,0 +1,38 @@
+.autocomplete-container {
+    margin-bottom: 20px;
+    position: relative;
+  }
+  
+  .input-container {
+    display: flex;
+  }
+  
+  .input-container input {
+    flex: 1;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    padding-right: 31px;
+    font-size: 16px;
+  }
+  
+  #address-suggestions {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+  }
+  
+  #address-suggestions li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+  }
+  
+  #address-suggestions li:hover {
+    background-color: #f0f0f0;
+  }  
