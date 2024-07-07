@@ -10,7 +10,7 @@
         },
         otp:{
             type:Number,
-            required:true,
+            required:true
         },
         timestamp:{
             type:Date,
