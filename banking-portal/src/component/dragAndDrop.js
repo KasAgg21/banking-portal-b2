@@ -31,7 +31,7 @@ const DragAndDropImages = () => {
     
             try {
                 const response = await axios.post('https://api.cloudinary.com/v1_1/ds5wmytro/upload', formData);
-                console.log(response.data.secure_url)
+                 console.log(response.data.secure_url)
                 uploadedFileUrls.push(response.data.secure_url);
                 console.log(uploadedFileUrls)
             } catch (error) {
