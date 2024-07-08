@@ -25,3 +25,11 @@ exports.addressValidation = [
     check('address.city', "City is required").notEmpty(),
     check('address.postcode', "Postcode is required").notEmpty(),
 ];
+exports.docsValidation = [
+    check('files')
+        .isArray()
+        .withMessage('Files should be an array of URLs')
+        .custom(urls => urls.every(url => /^(ftp|http|https):\/\/[^ "]+$/.test(url)))
+        .withMessage('Each item in the files array must be a valid URL')
+];
+exports.transactionValidation = [];
