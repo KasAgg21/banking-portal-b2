@@ -6,17 +6,20 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Table, Card, CardBody, CardTitle, CardText, Spinner } from 'react-bootstrap'; // Import necessary components
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-
+import './dashboard.css'
 
 
 export default function Dashboard() {
     const [userDetails, setUserDetails] = useState(null);
     const [loading, setLoading] = useState(true);
     const email = "ramanraghav2.0@gmail.com";
+    const [greeting, setGreeting] = useState('');
+
 
     async function fetchData() {
         try {
             const data = await fetchUserDetailsByEmail(email);
+            console.log(data.data);
             setUserDetails(data.data);
         } catch (error) {
             console.error("Error fetching user details:", error);
@@ -24,6 +27,8 @@ export default function Dashboard() {
             setLoading(false);
         }
     }
+
+    
 
     const generatePDF = async () => {
         if (!userDetails) {
@@ -100,6 +105,15 @@ export default function Dashboard() {
 
     useEffect(() => {
         fetchData();
+
+        const currentHour = new Date().getHours();
+        if (currentHour < 12) {
+            setGreeting('Good Morning ☀️');
+        } else if (currentHour < 18) {
+            setGreeting('Good Afternoon 🌞');
+        } else {
+            setGreeting('Good Evening 🌜');
+        }
     }, []);
 
     if (loading) {
@@ -114,13 +128,13 @@ export default function Dashboard() {
 
     return (
         <div className="container mt-5">
-            <h1 className="mb-4">Good Morning ☀️</h1>
-            <Card className="mb-4">
-                <CardBody>
-                    <CardTitle className="h5">Balance</CardTitle>
-                    <CardText>{balanceText}</CardText>
-                </CardBody>
-            </Card>
+            <h1 className="mb-4">{greeting}</h1>
+            <div className="card mb-4">
+                <div className="card-body">
+                    <h5 className="card-title">Balance</h5>
+                    <p className="card-text">{balanceText}</p>
+                </div>
+            </div>
             <h2 className="mb-4">Insights</h2>
             {/* Placeholder for insights */}
             <h2 className="mb-4">Favorite Transfers</h2>
@@ -152,7 +166,7 @@ export default function Dashboard() {
                     ))}
                 </tbody>
             </Table>
-            <button onClick={generatePDF}>Download PDF</button>
+            <button className="btn-gradient" onClick={generatePDF}>Download PDF</button>
         </div>
     );
 }
