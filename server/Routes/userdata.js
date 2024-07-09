@@ -1,15 +1,14 @@
-const express = require('express')
+const express = require('express');
+const { addUserAddress, docreateuser, sendOtp,fetchUserDetails,addDocumentURLs } = require('../Controller/user_controller');
+const { otpMailValidator, userValidation, addressValidation,docsValidation } = require('../helpers/validation');
 
-const {docreateuser, sendOtp} = require('../Controller/user_controller');
-const{otpMailValidator} = require('../helpers/validation'); 
-const {userValidation} = require('../helpers/validation')
 
 const router = express.Router();
 
+router.post("/add-docs", docsValidation, addDocumentURLs);
 router.post("/create-user", userValidation, docreateuser);
- 
-//otp verification routes
-router.post('/send-otp',otpMailValidator, sendOtp);
-
+router.post("/user-address", addressValidation, addUserAddress);
+router.post('/send-otp', otpMailValidator, sendOtp);
+router.get('/details', fetchUserDetails);
 
 module.exports = router;
