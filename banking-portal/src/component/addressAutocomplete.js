@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/AddressAutocomplete.css';
+import '../styles/addressAutocomplete.css';
 
 const loqateApiKey = 'HA26-FT52-AP96-AD96';
 

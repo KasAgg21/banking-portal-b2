@@ -4,6 +4,7 @@ import ButtonEnabler from './component/disableButton'
 import DragAndDrop from './component/dragAndDrop'
 import HomeAddress from './component/homeAddressForm'
 import Dashboard from './component/dashboard';
+import Address from './component/addressAutocomplete'
 function App() {
   return (
     <div className="App">
@@ -12,6 +13,7 @@ function App() {
       <DragAndDrop/>
       <HomeAddress/>
       <Dashboard/>
+      <Address/>
     </div>
   );
 }
