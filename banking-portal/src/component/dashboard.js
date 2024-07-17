@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Table, Card, CardBody, CardTitle, CardText, Spinner } from 'react-bootstrap'; // Import necessary components
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import './dashboard.css'
+import '../styles/dashboard.css'
 
 
 export default function Dashboard() {
